@@ -9,8 +9,8 @@ Para baixar e analisar o código serão necessários comprir alguns requisitos, 
 ### Pré Requisitos
 
 ```
-* Java 1.8
-* MongoDB stable
+* Java JRE 1.8
+* MongoDB Latest
 ```
 
 ### Configuração e execução
@@ -22,6 +22,8 @@ Para utilizar o projeto como base é necessário trocar as informações de cone
 A API permite o cadastro e autenticação de usuários e permite que um usuário cadastre eventos informando o nome do evento e a data que o mesmo acontecerá
 
 ### Registro
+
+Registro de usuários
 
 ### /register ⇒ <code>Object</code>
 
