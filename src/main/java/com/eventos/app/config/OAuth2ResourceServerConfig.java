@@ -1,6 +1,6 @@
 package com.eventos.app.config;
 
-import com.eventos.app.common.components.SpringDataJpaUserDetailsService;
+import com.eventos.app.common.components.SpringDataUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,12 +24,12 @@ import java.io.IOException;
 @EnableResourceServer
 public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    private SpringDataJpaUserDetailsService userDetailsService;
+    private SpringDataUserDetailsService userDetailsService;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
-    public OAuth2ResourceServerConfig(SpringDataJpaUserDetailsService userDetailsService){
+    public OAuth2ResourceServerConfig(SpringDataUserDetailsService userDetailsService){
         super();
         this.userDetailsService = userDetailsService;
     }

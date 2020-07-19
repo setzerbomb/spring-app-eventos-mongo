@@ -11,13 +11,13 @@ import org.springframework.security.oauth2.common.exceptions.UserDeniedAuthoriza
 import org.springframework.stereotype.Service;
 
 @Service
-public class  SpringDataJpaUserDetailsService implements UserDetailsService {
+public class SpringDataUserDetailsService implements UserDetailsService {
 
     private UsersService usersService;
     private MessageByLocaleService messageByLocaleService;
 
     @Autowired
-    public SpringDataJpaUserDetailsService(UsersService service, MessageByLocaleService messageByLocaleService) {
+    public SpringDataUserDetailsService(UsersService service, MessageByLocaleService messageByLocaleService) {
         this.usersService = service;
         this.messageByLocaleService = messageByLocaleService;
     }
@@ -29,9 +29,7 @@ public class  SpringDataJpaUserDetailsService implements UserDetailsService {
             return new ConnectedUser(user.getEmail(), user.getSenha(), true,
                     AuthorityUtils.createAuthorityList("USER"));
         }
-        else{
-            throw new BadCredentialsException(messageByLocaleService.getMessage("user.email.invalid"));
-        }
+        throw new BadCredentialsException(messageByLocaleService.getMessage("user.email.invalid"));
     }
 
 }

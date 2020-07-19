@@ -1,5 +1,6 @@
 package com.eventos.app.services;
 
+import com.eventos.app.interfaces.CrudTestInterface;
 import com.eventos.app.controller.DTO.UserDTO;
 import com.eventos.app.model.domain.User;
 import com.eventos.app.model.service.UsersService;
@@ -19,7 +20,7 @@ import java.util.Collection;
 @DataMongoTest
 @ExtendWith(SpringExtension.class)
 @ComponentScan(value = {"com.eventos.app.model"})
-public class UserServiceTest implements ServiceTest{
+public class UserServiceTest implements CrudTestInterface {
 
     private UsersService usersService;
 

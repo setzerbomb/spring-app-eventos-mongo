@@ -1,6 +1,6 @@
-package com.eventos.app.services;
+package com.eventos.app.interfaces;
 
-public interface ServiceTest {
+public interface CrudTestInterface {
 
     void insert() throws Exception;
 

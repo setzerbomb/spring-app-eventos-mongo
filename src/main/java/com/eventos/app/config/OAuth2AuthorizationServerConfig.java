@@ -1,9 +1,7 @@
 package com.eventos.app.config;
 
-
-import com.eventos.app.common.components.SpringDataJpaUserDetailsService;
+import com.eventos.app.common.components.SpringDataUserDetailsService;
 import com.eventos.app.config.oauth2.CustomTokenEnhancer;
-import com.eventos.app.model.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -32,7 +29,7 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
 
     private final AuthenticationManager authenticationManager;
 
-    private final SpringDataJpaUserDetailsService userService;
+    private final SpringDataUserDetailsService userService;
 
     @Value("${oauth.clientId:rBCWGLZDvm}") // change this line
     private String clientId;
@@ -53,7 +50,7 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     private int refreshTokenValiditySeconds;
 
     @Autowired
-    public OAuth2AuthorizationServerConfig(AuthenticationManager authenticationManager, SpringDataJpaUserDetailsService userService){
+    public OAuth2AuthorizationServerConfig(AuthenticationManager authenticationManager, SpringDataUserDetailsService userService){
         super();
         this.authenticationManager = authenticationManager;
         this.userService = userService;

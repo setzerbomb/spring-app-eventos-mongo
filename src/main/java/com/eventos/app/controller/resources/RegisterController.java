@@ -17,11 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@AllArgsConstructor
 public class RegisterController {
 
-    private final UsersService usersService;
-    private final MessageByLocaleService messageByLocaleService;
+    private UsersService usersService;
+    private MessageByLocaleService messageByLocaleService;
+
+    @Autowired
+    public RegisterController(UsersService usersService, MessageByLocaleService messageByLocaleService) {
+        this.usersService = usersService;
+        this.messageByLocaleService = messageByLocaleService;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<String> create(@Valid @RequestBody UserDTO userDTO, BindingResult error){

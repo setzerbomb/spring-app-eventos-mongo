@@ -9,6 +9,9 @@ import com.eventos.app.model.domain.Event;
 import com.eventos.app.model.service.EventsService;
 import com.eventos.app.model.service.UsersService;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,7 +70,7 @@ public class EventsController {
                 if (!error.hasErrors()) {
                     eventDTO.setId(id);
                     eventDTO.setUser(user);
-                    eventsService.insert(eventDTO);
+                    eventsService.update(eventDTO);
                     return new ResponseEntity<String>(messageByLocaleService.getMessage("event.updated.success"), HttpStatus.OK);
                 }
                 return new ResponseEntity<String>(error.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST);
