@@ -32,11 +32,11 @@ public class EventsController {
     @GetMapping
     public ResponseEntity<Collection<Event>> list(){
         Authentication authentication = authenticationFacade.getAuthentication();
-        try {
-            return new ResponseEntity<>(eventsService.findByUser(authentication.getName()), HttpStatus.OK);
-        } catch (DataException e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        if (authentication != null) {
+            String user = usersService.findByEmail(authentication.getName()).getId();
+            return new ResponseEntity<>(eventsService.findByUser(user), HttpStatus.OK);
         }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping

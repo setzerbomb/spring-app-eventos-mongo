@@ -45,7 +45,7 @@ public class EventsService extends GenericDataService<Event, EventDTO> {
         throw new DataException("event.not.fount");
     }
 
-    public Collection<Event> findByUser(String user) throws DataException{
+    public Collection<Event> findByUser(String user){
         return eventsRepository.findByUser(user);
     }
 

@@ -2,6 +2,7 @@ package com.eventos.app.model.domain;
 
 import com.eventos.app.controller.DTO.EventDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class Event {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date data;
     private String user;
+    @JsonIgnore
     @Version private Long version;
 
     public Event(EventDTO eventDTO){

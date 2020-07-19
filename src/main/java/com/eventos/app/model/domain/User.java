@@ -27,6 +27,7 @@ public class User {
     @JsonIgnore
     private String email;
     private @JsonIgnore String senha;
+    @JsonIgnore
     @Version
     private Long version;
 
