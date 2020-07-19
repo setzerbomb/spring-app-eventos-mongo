@@ -43,7 +43,7 @@ Registro de usuários
 
 Todos os eventos são associados ao contexto de sessão do usuário.
 
-### /events ⇒ <code>Array</code>
+### /events ⇒ <code>Void</code>
 
 <p> Retorna todos os eventos armazenados associados ao usuário </p>
 
