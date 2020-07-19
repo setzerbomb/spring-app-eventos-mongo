@@ -59,6 +59,9 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 
                         if (header == null){
                             switch (origin) {
+                                case "https://frozen-retreat-19749.herokuapp.com":
+                                    ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "https://frozen-retreat-19749.herokuapp.com");
+                                    break;
                                 default:
                                     ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
                                     break;
