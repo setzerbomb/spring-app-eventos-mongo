@@ -25,7 +25,7 @@ A API permite o cadastro e autenticação de usuários e permite que um usuário
 
 Registro de usuários
 
-### /register ⇒ <code>Object</code>
+### /register ⇒ <code>String</code>
 
 <p> Adiciona um usuário </p>
 
@@ -43,7 +43,7 @@ Registro de usuários
 
 Todos os eventos são associados ao contexto de sessão do usuário.
 
-### /events ⇒ <code>Void</code>
+### /events ⇒ <code>Array</code>
 
 <p> Retorna todos os eventos armazenados associados ao usuário </p>
 
@@ -63,7 +63,7 @@ Todos os eventos são associados ao contexto de sessão do usuário.
 | ----- | ------------------- | ------------------------------------------------------------ |
 |  id   | <code>String</code> | Id do evento                                                 |
 
-### /events ⇒ <code>Object</code>
+### /events ⇒ <code>String</code>
 
 <p> Adiciona um evento </p>
 
@@ -77,7 +77,7 @@ Todos os eventos são associados ao contexto de sessão do usuário.
 
 <a name="module_api../events/_id"></a>
 
-### /events/:id ⇒ <code>Object</code>
+### /events/:id ⇒ <code>String</code>
 
 <p> Atualiza um evento armazenado </p>
 
@@ -93,7 +93,7 @@ Todos os eventos são associados ao contexto de sessão do usuário.
 
 <a name="module_api../events/_id"></a>
 
-### /events/:id ⇒ <code>Object</code>
+### /events/:id ⇒ <code>Void</code>
 
 <p> Remove um evento </p>
 
