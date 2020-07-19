@@ -83,28 +83,30 @@ public class EventsController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Event> find(@PathVariable String id){
+    public ResponseEntity<Event> find(@PathVariable String id) {
         Authentication authentication = authenticationFacade.getAuthentication();
         if (authentication != null) {
             String user = usersService.findByEmail(authentication.getName()).getId();
             return new ResponseEntity<>(
-                    eventsService.findByUserAndId(id,user),HttpStatus.OK);
+                    eventsService.findByUserAndId(user,id),HttpStatus.OK);
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable String id){
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         Authentication authentication = authenticationFacade.getAuthentication();
         if (authentication != null) {
             String user = usersService.findByEmail(authentication.getName()).getId();
             try {
-                Event event = eventsService.findByUserAndId(id,user);
-                return new ResponseEntity<Boolean>(eventsService.delete(event), HttpStatus.OK);
+                Event event = eventsService.findByUserAndId(user,id);
+                if (eventsService.delete(event)) {
+                    return new ResponseEntity<>(null, HttpStatus.OK);
+                }
             } catch (DataException e) {
-                return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
             }
         }
-        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }
