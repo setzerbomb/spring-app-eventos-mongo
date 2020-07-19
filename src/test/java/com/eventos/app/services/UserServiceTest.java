@@ -19,12 +19,12 @@ import java.util.Collection;
 @DataMongoTest
 @ExtendWith(SpringExtension.class)
 @ComponentScan(value = {"com.eventos.app.model"})
-public class UserPojoTest implements ServiceTest{
+public class UserServiceTest implements ServiceTest{
 
     private UsersService usersService;
 
     @Autowired
-    public UserPojoTest(UsersService usersService, MongoTemplate mongoTemplate) {
+    public UserServiceTest(UsersService usersService, MongoTemplate mongoTemplate) {
         this.usersService = usersService;
     }
 
