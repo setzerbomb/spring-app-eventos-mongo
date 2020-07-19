@@ -35,9 +35,9 @@ Registro de usuários
 | Param             | Type                | Description                                      |
 | ------------------| ------------------- | -------------------------------------------------|
 | nome              | <code>String</code> | Nome do evento                                   |
-| email             | <code>Date</code>   | Data do evento                                   |
-| senha             | <code>Date</code>   | Data do evento                                   |
-| confirmacaoSenha  | <code>Date</code>   | Data do evento                                   |
+| email             | <code>String</code> | Data do evento                                   |
+| senha             | <code>String</code> | Data do evento                                   |
+| confirmacaoSenha  | <code>String</code> | Data do evento                                   |
 
 ### Eventos
 
