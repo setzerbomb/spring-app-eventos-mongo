@@ -103,7 +103,7 @@ public class EventControllerTest extends SecuredController implements CrudTestIn
     @Test
     @DisplayName("Delete event by id")
     public void delete() throws Exception {
-        Collection events = this.eventsService.findByUser(user.getId());
+        Collection events = this.eventsService.list();
         Assertions.assertTrue(!events.isEmpty());
 
         String token = "Bearer " + obtainAccessToken("set@localhost","123");

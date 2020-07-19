@@ -1,5 +1,7 @@
 package com.eventos.app.controllers;
 
+import com.eventos.app.model.domain.User;
+import com.eventos.app.model.service.UsersService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Collection;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureJson
@@ -25,8 +29,13 @@ public class RegisterControllerTest {
     private MockMvc mvc;
 
     @Autowired
-    public RegisterControllerTest(MockMvc mvc) {
+    public RegisterControllerTest(MockMvc mvc, UsersService usersService) throws Exception {
         this.mvc = mvc;
+
+        Collection<User> users = usersService.list();
+        for (User user: users) {
+            usersService.delete(user);
+        }
     }
 
     @DisplayName("Can create users")
