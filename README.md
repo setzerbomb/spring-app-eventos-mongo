@@ -34,10 +34,10 @@ Registro de usuários
 
 | Param             | Type                | Description                                      |
 | ------------------| ------------------- | -------------------------------------------------|
-| nome              | <code>String</code> | Nome do evento                                   |
-| email             | <code>String</code> | Data do evento                                   |
-| senha             | <code>String</code> | Data do evento                                   |
-| confirmacaoSenha  | <code>String</code> | Data do evento                                   |
+| nome              | <code>String</code> | Nome do usuário                                  |
+| email             | <code>String</code> | Email do usuário                                 |
+| senha             | <code>String</code> | Senha do usuário                                 |
+| confirmacaoSenha  | <code>String</code> | Confirmação de Senha                             |
 
 ### Eventos
 
