@@ -82,7 +82,7 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
         oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
 
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000","https://frozen-retreat-19749.herokuapp.com"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000","https://react-app-eventos.herokuapp.com"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization","Content-Type"));
         configuration.setAllowedMethods(Arrays.asList("POST","OPTIONS"));
         configuration.setAllowCredentials(true);
