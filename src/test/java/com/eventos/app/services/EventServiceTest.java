@@ -19,7 +19,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Collection;
 import java.util.List;
 
 @DataMongoTest
@@ -31,10 +30,11 @@ public class EventServiceTest implements CrudTestInterface {
     private User user;
 
     @Autowired
-    public EventServiceTest(EventsService eventsService,UsersService usersService, MongoTemplate mongoTemplate) throws DataException {
+    public EventServiceTest(EventsService eventsService,UsersService usersService) throws DataException {
         this.eventsService = eventsService;
-        user = usersService.findByEmail("set@localhost");
-        user = user == null ? usersService.insert(new UserDTO("set", "set@localhost","123","123")) : user;
+        user = usersService.findByEmail("set@localhost") == null ?
+                usersService.insert(new UserDTO("set", "set@localhost","123","123")) :
+                usersService.findByEmail("set@localhost");
     }
 
     @Override
@@ -84,11 +84,11 @@ public class EventServiceTest implements CrudTestInterface {
     @DisplayName("Can delete events from database")
     @Override
     public void delete() throws Exception{
-        Collection<Event> events = eventsService.list();
-        Assertions.assertTrue(!events.isEmpty());
-        for (Event event: events) {
+        Assertions.assertNotNull(eventsService.insert(new EventDTO("GOTY 2020", Formatter.StrToDate("2020-12-12"),user.getId())));
+        for (Event event: eventsService.list()) {
             eventsService.delete(event);
         }
+        Assertions.assertTrue(eventsService.list().isEmpty());
     }
 
     @Test

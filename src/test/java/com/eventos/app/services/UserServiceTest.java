@@ -15,8 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Collection;
-
 @DataMongoTest
 @ExtendWith(SpringExtension.class)
 @ComponentScan(value = {"com.eventos.app.model"})
@@ -61,11 +59,11 @@ public class UserServiceTest implements CrudTestInterface {
     @DisplayName("Can delete users from database")
     @Override
     public void delete() throws Exception{
-        Collection<User> users = usersService.list();
-        Assertions.assertTrue(!users.isEmpty());
-        for (User user: users) {
+        Assertions.assertNotNull(usersService.insert(new UserDTO("set", "set@localhost","123","123")));
+        for (User user: usersService.list()) {
             usersService.delete(user);
         }
+        Assertions.assertTrue(usersService.list().isEmpty());
     }
 
     @Test

@@ -4,7 +4,6 @@ import com.eventos.app.common.components.MessageByLocaleService;
 import com.eventos.app.common.exceptions.DataException;
 import com.eventos.app.controller.DTO.UserDTO;
 import com.eventos.app.model.service.UsersService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;

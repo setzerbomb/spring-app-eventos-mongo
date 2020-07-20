@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
+import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,17 +15,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.UUID;
 
-@Document
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Document
 public class User {
 
     @Id
     private String id;
     private String nome;
-    @Indexed(unique=true)
     @JsonIgnore
+    @Indexed(name="email_index" ,unique=true, direction = IndexDirection.ASCENDING)
     private String email;
     private @JsonIgnore String senha;
     @JsonIgnore

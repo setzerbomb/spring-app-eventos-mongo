@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +21,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Collection;
@@ -36,14 +39,16 @@ public class EventControllerTest extends SecuredController implements CrudTestIn
     private MockMvc mvc;
     private User user;
     private EventsService eventsService;
+    private JacksonJsonParser jsonParser = new JacksonJsonParser();
 
     @Autowired
     public EventControllerTest(MockMvc mvc, UsersService usersService, EventsService eventsService) throws Exception {
         super(mvc);
         this.mvc = mvc;
         this.eventsService = eventsService;
-        user = usersService.findByEmail("set@localhost");
-        user = user == null ? usersService.insert(new UserDTO("set", "set@localhost","123","123")) : user;
+        user = usersService.findByEmail("set@localhost") == null ?
+                usersService.insert(new UserDTO("set", "set@localhost","123","123")) :
+                usersService.findByEmail("set@localhost");
     }
 
 
@@ -86,8 +91,8 @@ public class EventControllerTest extends SecuredController implements CrudTestIn
     @Test
     @DisplayName("Find event by id")
     public void find() throws Exception {
+        Assertions.assertNotNull(eventsService.insert(new EventDTO("GOTY 2020", Formatter.StrToDate("2020-12-12"),user.getId())));
         Collection events = this.eventsService.findByUser(user.getId());
-        Assertions.assertTrue(!events.isEmpty());
 
         String token = "Bearer " + obtainAccessToken("set@localhost","123");
         Assertions.assertNotNull(token);
@@ -103,19 +108,17 @@ public class EventControllerTest extends SecuredController implements CrudTestIn
     @Test
     @DisplayName("Delete event by id")
     public void delete() throws Exception {
+        Assertions.assertNotNull(eventsService.insert(new EventDTO("GOTY 2020", Formatter.StrToDate("2020-12-12"),user.getId())));
         Collection events = this.eventsService.findByUser(user.getId());
 
-        if (!events.isEmpty()) {
+        String token = "Bearer " + obtainAccessToken("set@localhost", "123");
+        Assertions.assertNotNull(token);
 
-            String token = "Bearer " + obtainAccessToken("set@localhost", "123");
-            Assertions.assertNotNull(token);
-
-            mvc.perform(MockMvcRequestBuilders
-                    .delete("/events/{id}", ((List<Event>) events).get(0).getId())
-                    .header("Authorization", token)
-                    .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(MockMvcResultMatchers.status().isOk());
-        }
+        mvc.perform(MockMvcRequestBuilders
+                .delete("/events/{id}", ((List<Event>) events).get(0).getId())
+                .header("Authorization", token)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test

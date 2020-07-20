@@ -3,14 +3,12 @@ package com.eventos.app.controller.DTO;
 import com.eventos.app.common.components.Formatter;
 import com.eventos.app.controller.DTO.common.BaseDTO;
 import com.eventos.app.model.domain.Event;
-import com.eventos.app.model.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
