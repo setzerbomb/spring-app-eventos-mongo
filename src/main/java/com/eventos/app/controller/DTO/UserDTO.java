@@ -1,6 +1,5 @@
 package com.eventos.app.controller.DTO;
 
-import com.eventos.app.common.constraints.FieldsValueMatch;
 import com.eventos.app.controller.DTO.common.BaseDTO;
 import com.eventos.app.model.domain.User;
 import lombok.AllArgsConstructor;
@@ -12,13 +11,6 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-@FieldsValueMatch.List({
-        @FieldsValueMatch(
-                field = "senha",
-                fieldMatch = "confirmacaoSenha",
-                message = "{user.password.error.match}"
-        )
-})
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
