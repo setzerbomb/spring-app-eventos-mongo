@@ -59,7 +59,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 
                         if (header == null){
                             switch (origin) {
-                                case "https://frozen-retreat-19749.herokuapp.com":
+                                case "https://react-app-eventos.herokuapp.com":
                                     ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "https://react-app-eventos.herokuapp.com");
                                     break;
                                 default:

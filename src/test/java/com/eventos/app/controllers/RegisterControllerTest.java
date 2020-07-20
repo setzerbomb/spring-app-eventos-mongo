@@ -2,7 +2,6 @@ package com.eventos.app.controllers;
 
 import com.eventos.app.model.domain.User;
 import com.eventos.app.model.service.UsersService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
