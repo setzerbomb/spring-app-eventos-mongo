@@ -69,7 +69,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                         }
 
                         ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept-Language");
-                        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST");
+                        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST, DELETE");
 
                         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
