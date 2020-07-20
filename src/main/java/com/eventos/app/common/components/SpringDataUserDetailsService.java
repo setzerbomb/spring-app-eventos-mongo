@@ -29,7 +29,7 @@ public class SpringDataUserDetailsService implements UserDetailsService {
             return new ConnectedUser(user.getEmail(), user.getSenha(), true,
                     AuthorityUtils.createAuthorityList("USER"));
         }
-        throw new BadCredentialsException(messageByLocaleService.getMessage("user.email.invalid"));
+        throw new BadCredentialsException(messageByLocaleService.getMessage("user.credentials.invalid"));
     }
 
 }
