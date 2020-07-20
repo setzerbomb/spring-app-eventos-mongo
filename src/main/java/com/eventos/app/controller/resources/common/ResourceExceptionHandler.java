@@ -2,6 +2,7 @@ package com.eventos.app.controller.resources.common;
 
 import com.eventos.app.common.exceptions.DataException;
 import com.eventos.app.common.exceptions.ObjectNotFoundException;
+import org.springframework.boot.context.properties.bind.validation.ValidationErrors;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.ValidationException;
 
 @RestControllerAdvice
 public class ResourceExceptionHandler {
@@ -21,9 +23,15 @@ public class ResourceExceptionHandler {
 	}
 
 	@ExceptionHandler(DataException.class)
-	public ResponseEntity<StandardError> dataValitionException(ObjectNotFoundException e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> dataException(ObjectNotFoundException e, HttpServletRequest request) {
 		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+
+	@ExceptionHandler(ValidationException.class)
+	public ResponseEntity<String> validationException(ObjectNotFoundException e, HttpServletRequest request) {
+		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null);
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(DataIntegrityViolationException.class)

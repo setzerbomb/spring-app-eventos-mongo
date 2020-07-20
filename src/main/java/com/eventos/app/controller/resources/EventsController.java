@@ -39,7 +39,7 @@ public class EventsController {
     }
 
     @PostMapping
-    public ResponseEntity<Event> create(@Valid @RequestBody EventDTO eventDTO, BindingResult error) throws DataException {
+    public ResponseEntity<Event> create(@Valid @RequestBody EventDTO eventDTO, BindingResult error) throws DataException,ValidationException {
         Authentication authentication = authenticationFacade.getAuthentication();
         if (authentication != null) {
             if (!error.hasErrors()) {
@@ -52,7 +52,7 @@ public class EventsController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Event> update(@PathVariable String id, @Valid @RequestBody EventDTO eventDTO, BindingResult error) throws DataException{
+    public ResponseEntity<Event> update(@PathVariable String id, @Valid @RequestBody EventDTO eventDTO, BindingResult error) throws DataException, ValidationException{
         Authentication authentication = authenticationFacade.getAuthentication();
         if (authentication != null) {
             String user = usersService.findByEmail(authentication.getName()).getId();

@@ -19,7 +19,10 @@ public class UsersService extends GenericDataService<User, UserDTO> {
 
     @Override
     public User insert(UserDTO userDTO) throws DuplicateKeyException, DataException {
-        return usersRepository.insert(new User(userDTO));
+        if (userDTO.getSenha() != null){
+            return usersRepository.insert(new User(userDTO));
+        }
+        throw new DataException("{invalid.inputs}");
     }
 
     @Override
