@@ -39,6 +39,29 @@ Registro de usuários
 | senha             | <code>String</code> | Senha do usuário                                 |
 | confirmacaoSenha  | <code>String</code> | Confirmação de Senha                             |
 
+### Login
+
+Autenticação
+
+### /oauth/token ⇒ <code>Oject</code>
+
+<p> Autentica um usuário e retorna um token JWT </p>
+
+**Method**: POST </br>
+**Type**: form-data  </br>
+**Returns**: <code>Object</code> - Objeto contendo token JWT para autorização do usuário
+
+| Param             | Type                | Description                                      |
+| ------------------| ------------------- | -------------------------------------------------|
+| username          | <code>String</code> | Email do usuário                                 |
+| password          | <code>String</code> | Senha                                            |
+| grant_type        | <code>String</code> | Tipo de Autorização (Padrão: password)           |
+
+**Headers**: 
+| Param             | Type                | Description                                      |
+| ------------------| ------------------- | -------------------------------------------------|
+| Authorization     | <code>String</code> | Token base64 contendo o clientId e clientSecret  |
+
 ### Eventos
 
 Todos os eventos são associados ao contexto de sessão do usuário.
