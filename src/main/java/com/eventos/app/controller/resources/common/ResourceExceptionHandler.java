@@ -11,13 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.ValidationException;
 
-@RestController
+@RestControllerAdvice
 public class ResourceExceptionHandler {
 
 	private MessageByLocaleService messageByLocaleService;
