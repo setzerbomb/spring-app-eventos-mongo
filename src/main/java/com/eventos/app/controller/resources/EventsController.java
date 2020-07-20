@@ -38,41 +38,29 @@ public class EventsController {
     }
 
     @PostMapping
-    public ResponseEntity<String> create(@Valid @RequestBody EventDTO eventDTO, BindingResult error){
+    public ResponseEntity<Event> create(@Valid @RequestBody EventDTO eventDTO, BindingResult error) throws DataException {
         Authentication authentication = authenticationFacade.getAuthentication();
-        try{
-            if (authentication != null) {
-                if (!error.hasErrors()) {
-                    eventDTO.setUser(usersService.findByEmail(authentication.getName()).getId());
-                    eventsService.insert(eventDTO);
-                    return new ResponseEntity<String>(messageByLocaleService.getMessage("event.create.success"), HttpStatus.OK);
-                }
-                return new ResponseEntity<String>(error.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST);
+        if (authentication != null) {
+            if (!error.hasErrors()) {
+                eventDTO.setUser(usersService.findByEmail(authentication.getName()).getId());
+                return new ResponseEntity<>(eventsService.insert(eventDTO),  HttpStatus.OK);
             }
-        }
-        catch (DataException e) {
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            throw new RuntimeException(error.getFieldError().getDefaultMessage());
         }
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<String> update(@PathVariable String id, @Valid @RequestBody EventDTO eventDTO, BindingResult error){
+    public ResponseEntity<Event> update(@PathVariable String id, @Valid @RequestBody EventDTO eventDTO, BindingResult error) throws DataException{
         Authentication authentication = authenticationFacade.getAuthentication();
-        try{
-            if (authentication != null) {
-                String user = usersService.findByEmail(authentication.getName()).getId();
-                if (!error.hasErrors()) {
-                    eventDTO.setId(id);
-                    eventDTO.setUser(user);
-                    eventsService.update(eventDTO);
-                    return new ResponseEntity<String>(messageByLocaleService.getMessage("event.updated.success"), HttpStatus.OK);
-                }
-                return new ResponseEntity<String>(error.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST);
+        if (authentication != null) {
+            String user = usersService.findByEmail(authentication.getName()).getId();
+            if (!error.hasErrors()) {
+                eventDTO.setId(id);
+                eventDTO.setUser(user);
+                return new ResponseEntity<>(eventsService.update(eventDTO),  HttpStatus.OK);
             }
-        }
-        catch (DataException e) {
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            throw new RuntimeException(error.getFieldError().getDefaultMessage());
         }
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
@@ -89,17 +77,13 @@ public class EventsController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
+    public ResponseEntity<Void> delete(@PathVariable String id) throws DataException {
         Authentication authentication = authenticationFacade.getAuthentication();
         if (authentication != null) {
             String user = usersService.findByEmail(authentication.getName()).getId();
-            try {
-                Event event = eventsService.findByUserAndId(user,id);
-                if (eventsService.delete(event)) {
-                    return new ResponseEntity<>(null, HttpStatus.OK);
-                }
-            } catch (DataException e) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            Event event = eventsService.findByUserAndId(user,id);
+            if (eventsService.delete(event)) {
+                return new ResponseEntity<>(null, HttpStatus.OK);
             }
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
