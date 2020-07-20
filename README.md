@@ -48,7 +48,7 @@ Autenticação
 <p> Autentica um usuário e retorna um token JWT </p>
 
 **Method**: POST </br>
-**Type**: form-data
+**Type**: form-data  </br>
 **Returns**: <code>Object</code> - Objeto contendo token JWT para autorização do usuário
 
 | Param             | Type                | Description                                      |
