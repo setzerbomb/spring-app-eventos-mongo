@@ -19,7 +19,7 @@ public class UsersService extends GenericDataService<User, UserDTO> {
 
     @Override
     public User insert(UserDTO userDTO) throws DuplicateKeyException, DataException {
-        if (userDTO.getSenha() != userDTO.getConfirmacaoSenha()){
+        if (!userDTO.getSenha().equals(userDTO.getConfirmacaoSenha())){
             throw new DataException("{user.password.error.match}");
         }
         return usersRepository.insert(new User(userDTO));

@@ -9,13 +9,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AuthorizationServiceException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.ValidationException;
 
-@RestControllerAdvice
+@ControllerAdvice
 public class ResourceExceptionHandler {
 
 	private MessageByLocaleService messageByLocaleService;
