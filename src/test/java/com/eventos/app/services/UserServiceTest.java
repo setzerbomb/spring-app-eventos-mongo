@@ -59,7 +59,9 @@ public class UserServiceTest implements CrudTestInterface {
     @DisplayName("Can delete users from database")
     @Override
     public void delete() throws Exception{
-        Assertions.assertNotNull(usersService.insert(new UserDTO("set", "set@localhost","123","123")));
+        if (usersService.list().isEmpty()){
+            Assertions.assertNotNull(usersService.insert(new UserDTO("set", "set@localhost","123","123")));
+        }
         for (User user: usersService.list()) {
             usersService.delete(user);
         }
