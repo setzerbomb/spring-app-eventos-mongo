@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.util.Collection;
 
 @RestController()
@@ -45,7 +46,7 @@ public class EventsController {
                 eventDTO.setUser(usersService.findByEmail(authentication.getName()).getId());
                 return new ResponseEntity<>(eventsService.insert(eventDTO),  HttpStatus.OK);
             }
-            throw new RuntimeException(error.getFieldError().getDefaultMessage());
+            throw new ValidationException(error.getFieldError().getDefaultMessage());
         }
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
@@ -60,7 +61,7 @@ public class EventsController {
                 eventDTO.setUser(user);
                 return new ResponseEntity<>(eventsService.update(eventDTO),  HttpStatus.OK);
             }
-            throw new RuntimeException(error.getFieldError().getDefaultMessage());
+            throw new ValidationException(error.getFieldError().getDefaultMessage());
         }
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
