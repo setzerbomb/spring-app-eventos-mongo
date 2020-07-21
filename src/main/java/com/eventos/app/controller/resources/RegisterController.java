@@ -39,7 +39,7 @@ public class RegisterController {
             return new ResponseEntity<String>(messageByLocaleService.getMessage("user.error.duplicated.key"), HttpStatus.BAD_REQUEST);
         }
         catch (DataException e) {
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(messageByLocaleService.getMessage(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 
