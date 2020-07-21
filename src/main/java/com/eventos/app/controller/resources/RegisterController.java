@@ -4,6 +4,7 @@ import com.eventos.app.common.components.MessageByLocaleService;
 import com.eventos.app.common.exceptions.DataException;
 import com.eventos.app.controller.DTO.UserDTO;
 import com.eventos.app.model.service.UsersService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
@@ -12,10 +13,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
 @RestController
+@Log4j2
 public class RegisterController {
 
     private UsersService usersService;
@@ -28,7 +31,7 @@ public class RegisterController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> create(@Valid @RequestBody UserDTO userDTO, BindingResult error){
+    public ResponseEntity<String> create(@Valid @RequestBody UserDTO userDTO, BindingResult error)  throws ResponseStatusException {
         try{
             if (!error.hasErrors()) {
                 usersService.insert(userDTO);
@@ -36,10 +39,11 @@ public class RegisterController {
             }
             return new ResponseEntity<String>(error.getFieldError().getDefaultMessage(),HttpStatus.BAD_REQUEST);
         } catch (DuplicateKeyException dpke){
-            return new ResponseEntity<String>(messageByLocaleService.getMessage("user.error.duplicated.key"), HttpStatus.BAD_REQUEST);
+            log.info(dpke.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,messageByLocaleService.getMessage("user.error.duplicated.key"));
         }
         catch (DataException e) {
-            return new ResponseEntity<String>(messageByLocaleService.getMessage(e.getMessage()), HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,messageByLocaleService.getMessage(e.getMessage()));
         }
     }
 
