@@ -1,5 +1,6 @@
 package com.eventos.app.controllers;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -9,6 +10,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 public abstract class SecuredController {
+
+    @Value("basicToken:Basic ckJDV0dMWkR2bTp5alNFTkxTU243c21iT1VNT3FBVFJVMlBMRDFZV2RBNw==")
+    private String token;
 
     private MockMvc mvc;
 
@@ -26,7 +30,7 @@ public abstract class SecuredController {
         ResultActions result
                 = mvc.perform(MockMvcRequestBuilders.post("/oauth/token")
                 .params(params)
-                .header("Authorization", "Basic ckJDV0dMWkR2bTp5alNFTkxTU243c21iT1VNT3FBVFJVMlBMRDFZV2RBNw==")
+                .header("Authorization", token)
                 .accept("application/json;charset=UTF-8"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json;charset=UTF-8"));
