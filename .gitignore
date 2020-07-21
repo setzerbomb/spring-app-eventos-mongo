@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Sentry ###
+src/main/resources/sentry.properties

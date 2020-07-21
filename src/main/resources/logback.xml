@@ -1,0 +1,21 @@
+<configuration scan="true" debug="true">
+    <property name="app.name" value="MyApp"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{ISO8601} [%thread] %-5level %logger{40}: %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="Sentry" class="io.sentry.logback.SentryAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="Sentry"/>
+    </root>
+
+</configuration>
