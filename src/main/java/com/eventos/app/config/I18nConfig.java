@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MessageSourceResourceBundleLocator;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
@@ -32,22 +33,14 @@ public class I18nConfig extends AcceptHeaderLocaleResolver implements WebMvcConf
 
     @Bean
     public ValidatingMongoEventListener validatingMongoEventListener() {
-        return new ValidatingMongoEventListener(i18nValidator());
+        return new ValidatingMongoEventListener(getValidator());
     }
 
-
     @Bean
-    public Validator i18nValidator() {
-        return Validation.byDefaultProvider()
-                .configure()
-                .messageInterpolator(
-                        new ResourceBundleMessageInterpolator(
-                                new MessageSourceResourceBundleLocator(validationMessageSource())
-                        )
-                )
-                .buildValidatorFactory()
-                .getValidator()
-                ;
+    public LocalValidatorFactoryBean getValidator() {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        bean.setValidationMessageSource(validationMessageSource());
+        return bean;
     }
 
 

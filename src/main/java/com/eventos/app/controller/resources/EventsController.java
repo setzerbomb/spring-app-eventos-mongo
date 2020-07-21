@@ -8,6 +8,7 @@ import com.eventos.app.model.domain.Event;
 import com.eventos.app.model.service.EventsService;
 import com.eventos.app.model.service.UsersService;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,7 @@ import java.util.Collection;
 @RestController()
 @RequestMapping(value = "/events")
 @AllArgsConstructor
+@Log4j2
 public class EventsController {
 
     private final UsersService usersService;
@@ -48,7 +50,7 @@ public class EventsController {
                 try {
                     return new ResponseEntity<>(eventsService.insert(eventDTO),  HttpStatus.OK);
                 } catch (DataException e) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,messageByLocaleService.getMessage(e.getMessage()));
                 }
             }
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,error.getFieldError().getDefaultMessage());
@@ -67,7 +69,7 @@ public class EventsController {
                 try {
                     return new ResponseEntity<>(eventsService.update(eventDTO), HttpStatus.OK);
                 } catch (DataException e) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST,messageByLocaleService.getMessage(e.getMessage()));
                 }
             }
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,error.getFieldError().getDefaultMessage());
