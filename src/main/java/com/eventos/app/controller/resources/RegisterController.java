@@ -38,10 +38,10 @@ public class RegisterController {
             }
             return new ResponseEntity<String>(error.getFieldError().getDefaultMessage(),HttpStatus.BAD_REQUEST);
         } catch (DuplicateKeyException dpke){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,messageByLocaleService.getMessage("user.error.duplicated.key"));
+            return new ResponseEntity<String>(messageByLocaleService.getMessage("user.error.duplicated.key"),HttpStatus.BAD_REQUEST);
         }
         catch (DataException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,messageByLocaleService.getMessage(e.getMessage()));
+            return new ResponseEntity<String>(messageByLocaleService.getMessage(e.getMessage()),HttpStatus.BAD_REQUEST);
         }
     }
 
