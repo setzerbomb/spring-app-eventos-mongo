@@ -40,7 +40,7 @@ public class EventsController {
     }
 
     @PostMapping
-    public ResponseEntity<Event> create(@Valid @RequestBody EventDTO eventDTO, BindingResult error) throws ResponseStatusException {
+    public ResponseEntity<Event> create(@Valid @RequestBody EventDTO eventDTO, BindingResult error) throws ResponseStatusException,ValidationException {
         Authentication authentication = authenticationFacade.getAuthentication();
         if (authentication != null) {
             if (!error.hasErrors()) {
@@ -51,7 +51,7 @@ public class EventsController {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage());
                 }
             }
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,error.getFieldError().getDefaultMessage());
+            throw new ValidationException(error.getFieldError().getDefaultMessage());
         }
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
