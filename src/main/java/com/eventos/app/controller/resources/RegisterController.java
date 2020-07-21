@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 
 @RestController
+@Log4j2
 public class RegisterController {
 
     private UsersService usersService;
@@ -38,6 +39,7 @@ public class RegisterController {
             }
             return new ResponseEntity<String>(error.getFieldError().getDefaultMessage(),HttpStatus.BAD_REQUEST);
         } catch (DuplicateKeyException dpke){
+            log.info(dpke.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,messageByLocaleService.getMessage("user.error.duplicated.key"));
         }
         catch (DataException e) {
