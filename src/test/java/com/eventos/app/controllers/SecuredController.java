@@ -11,7 +11,7 @@ import org.springframework.util.MultiValueMap;
 
 public abstract class SecuredController {
 
-    @Value("basicToken:Basic ckJDV0dMWkR2bTp5alNFTkxTU243c21iT1VNT3FBVFJVMlBMRDFZV2RBNw==")
+    @Value("${basicToken:Basic ckJDV0dMWkR2bTp5alNFTkxTU243c21iT1VNT3FBVFJVMlBMRDFZV2RBNw==}")
     private String token;
 
     private MockMvc mvc;
