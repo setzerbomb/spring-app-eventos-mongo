@@ -1,6 +1,9 @@
 package com.eventos.app.config;
 
+import com.eventos.app.config.swagger.SwaggerManualApiPlugin;
 import com.google.common.collect.Lists;
+import io.swagger.annotations.Api;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import springfox.documentation.builders.*;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.ApiListingScannerPlugin;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.SecurityConfiguration;
@@ -24,7 +28,10 @@ import java.util.List;
 
 @Configuration
 @EnableSwagger2
+@AllArgsConstructor
 public class SwaggerConfig extends WebMvcConfigurationSupport {
+
+    private final SwaggerManualApiPlugin  swaggerManualApiPlugin;
 
     @Bean
     public Docket api() {
@@ -32,12 +39,19 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 .select()
                 .apis(RequestHandlerSelectors
                         .basePackage("com.eventos.app.controller.resources"))
-                .paths(PathSelectors.any()).build().apiInfo(metaData())
+                .paths(PathSelectors.any()).build()
+                .tags(new Tag("authentication-controller", "OAuth"))
+                .apiInfo(metaData())
                 .directModelSubstitute(LocalDate.class, String.class)
                 .genericModelSubstitutes(ResponseEntity.class)
                 .apiInfo(metaData())
                 .securitySchemes(Lists.newArrayList(apiKey()))
                 .securityContexts(Arrays.asList(securityContext()));
+    }
+
+    @Bean
+    public ApiListingScannerPlugin listingScanner() {
+        return swaggerManualApiPlugin;
     }
 
     @Bean
@@ -50,7 +64,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
         Contact contato0 = new Contact("Set", null, "set@localhost");
 
         return new ApiInfoBuilder().title("Eventos APP")
-                .description("Documentação dos End-Points. Consulte o README para gerar um token de autorização.")
+                .description("Documentação dos End-Points.")
                 .version("Alpha 0.1.0")
                 .license("Open Source")
                 .licenseUrl("https://github.com/setzerbomb/spring-app-eventos-mongo/blob/master/LICENSE.md")
@@ -79,8 +93,9 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     }
 
     private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(defaultAuth())
-                .forPaths(PathSelectors.ant("/events/**")).build();
+        return SecurityContext.builder().securityReferences(
+                defaultAuth())
+                .forPaths(PathSelectors.regex( "^(?!\\/register).*")).build();
     }
 
     private List<SecurityReference> defaultAuth() {
