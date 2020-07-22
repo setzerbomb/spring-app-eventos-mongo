@@ -39,11 +39,10 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 .select()
                 .apis(RequestHandlerSelectors
                         .basePackage("com.eventos.app.controller.resources"))
-                .paths(PathSelectors.any()).build()
-                .tags(new Tag("authentication-controller", "OAuth"))
-                .apiInfo(metaData())
+                .paths(PathSelectors.any()).build().apiInfo(metaData())
                 .directModelSubstitute(LocalDate.class, String.class)
                 .genericModelSubstitutes(ResponseEntity.class)
+                .tags(new Tag("authentication-controller", "OAuth"))
                 .apiInfo(metaData())
                 .securitySchemes(Lists.newArrayList(apiKey()))
                 .securityContexts(Arrays.asList(securityContext()));
@@ -93,8 +92,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     }
 
     private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(
-                defaultAuth())
+        return SecurityContext.builder().securityReferences(defaultAuth())
                 .forPaths(PathSelectors.regex( "^(?!\\/register).*")).build();
     }
 
@@ -103,7 +101,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 "global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference("apiKey",
+        return Arrays.asList(new SecurityReference("Bearer Token",
                 authorizationScopes));
     }
 
