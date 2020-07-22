@@ -31,29 +31,6 @@ public class I18nConfig extends AcceptHeaderLocaleResolver implements WebMvcConf
                 : Locale.lookup(Locale.LanguageRange.parse(headerLang), LOCALES);
     }
 
-    @Bean
-    public ValidatingMongoEventListener validatingMongoEventListener() {
-        return new ValidatingMongoEventListener(getValidator());
-    }
-
-    @Bean
-    public LocalValidatorFactoryBean getValidator() {
-        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
-        bean.setValidationMessageSource(validationMessageSource());
-        return bean;
-    }
-
-
-    @Bean
-    public ReloadableResourceBundleMessageSource validationMessageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:ValidationMessages");
-        messageSource.setCacheSeconds(3600);
-        messageSource.setDefaultEncoding( "utf-8" );
-        messageSource.setUseCodeAsDefaultMessage(true);
-        return messageSource;
-    }
-
 
     @Bean
     public ReloadableResourceBundleMessageSource messageSource() {

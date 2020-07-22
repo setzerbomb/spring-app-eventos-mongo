@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import javax.validation.ValidationException;
 import java.util.Collection;
 
 @RestController()
@@ -53,6 +52,7 @@ public class EventsController {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST,messageByLocaleService.getMessage(e.getMessage()));
                 }
             }
+            log.info(messageByLocaleService.getMessage(error.getFieldError().getDefaultMessage()));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,error.getFieldError().getDefaultMessage());
         }
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
