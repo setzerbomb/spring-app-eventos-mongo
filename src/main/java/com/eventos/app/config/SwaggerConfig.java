@@ -1,15 +1,15 @@
 package com.eventos.app.config;
 
 import com.google.common.collect.Lists;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
+import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.*;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -20,7 +20,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -39,6 +38,12 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 .apiInfo(metaData())
                 .securitySchemes(Lists.newArrayList(apiKey()))
                 .securityContexts(Arrays.asList(securityContext()));
+    }
+
+    @Bean
+    @ConfigurationProperties("oauth2.client")
+    public OAuth2ProtectedResourceDetails authDetails() {
+        return new AuthorizationCodeResourceDetails();
     }
 
     private ApiInfo metaData() {
@@ -78,7 +83,6 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 .forPaths(PathSelectors.ant("/events/**")).build();
     }
 
-
     private List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope = new AuthorizationScope(
                 "global", "accessEverything");
@@ -86,6 +90,14 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
         authorizationScopes[0] = authorizationScope;
         return Arrays.asList(new SecurityReference("apiKey",
                 authorizationScopes));
+    }
+
+    private AuthorizationScope[] scopes() {
+        AuthorizationScope[] scopes = {
+                new AuthorizationScope("read", "for read operations"),
+                new AuthorizationScope("write", "for write operations")
+        };
+        return scopes;
     }
 
 }
