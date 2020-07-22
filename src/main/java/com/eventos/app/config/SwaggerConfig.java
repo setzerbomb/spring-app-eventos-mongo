@@ -2,7 +2,6 @@ package com.eventos.app.config;
 
 import com.eventos.app.config.swagger.SwaggerManualApiPlugin;
 import com.google.common.collect.Lists;
-import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;

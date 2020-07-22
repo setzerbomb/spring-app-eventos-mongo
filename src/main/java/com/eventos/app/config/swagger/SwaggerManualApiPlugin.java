@@ -58,14 +58,14 @@ public class SwaggerManualApiPlugin implements ApiListingScannerPlugin {
                                                 .parameters(
                                                         Collections.singletonList( //<4a>
                                                                 new ParameterBuilder()
-                                                                        .description("username")
+                                                                        .description("User email")
                                                                         .name("username")
                                                                         .required(true)
                                                                         .build()))
                                                 .parameters(
                                                         Collections.singletonList(
                                                                 new springfox.documentation.builders.ParameterBuilder()
-                                                                        .description("Password")
+                                                                        .description("User Password")
                                                                         .type(new TypeResolver().resolve(String.class))
                                                                         .name("password")
                                                                         .parameterType("query")
@@ -76,7 +76,7 @@ public class SwaggerManualApiPlugin implements ApiListingScannerPlugin {
                                                 .parameters(
                                                         Collections.singletonList( //<4a>
                                                                 new ParameterBuilder()
-                                                                        .description("password")
+                                                                        .description("User Password")
                                                                         .name("password")
                                                                         .required(true)
                                                                         .build()))
@@ -95,7 +95,7 @@ public class SwaggerManualApiPlugin implements ApiListingScannerPlugin {
                                                         Collections.singletonList( //<4a>
                                                                 new ParameterBuilder()
                                                                         .name("grant_type")
-                                                                        .description("grant_type")
+                                                                        .description("Method for a client application to acquire an access token")
                                                                         .required(true)
                                                                         .build()))
                                                 .responseMessages(responseMessages())
