@@ -75,7 +75,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     }
 
     private ApiKey apiKey() {
-        return new ApiKey("apiKey", "Authorization", "header");
+        return new ApiKey("Bearer Token", "Authorization", "header");
     }
 
     private SecurityContext securityContext() {
