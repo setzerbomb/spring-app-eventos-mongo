@@ -1,17 +1,11 @@
 package com.eventos.app.config;
 
-import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.validation.beanvalidation.MessageSourceResourceBundleLocator;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
