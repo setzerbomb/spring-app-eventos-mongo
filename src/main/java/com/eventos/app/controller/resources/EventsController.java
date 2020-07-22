@@ -7,6 +7,7 @@ import com.eventos.app.controller.DTO.EventDTO;
 import com.eventos.app.model.domain.Event;
 import com.eventos.app.model.service.EventsService;
 import com.eventos.app.model.service.UsersService;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,6 @@ import java.util.Collection;
 @RestController()
 @RequestMapping(value = "/events")
 @AllArgsConstructor
-@Log4j2
 public class EventsController {
 
     private final UsersService usersService;
@@ -52,7 +52,6 @@ public class EventsController {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST,messageByLocaleService.getMessage(e.getMessage()));
                 }
             }
-            log.info(messageByLocaleService.getMessage(error.getFieldError().getDefaultMessage()));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,error.getFieldError().getDefaultMessage());
         }
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
