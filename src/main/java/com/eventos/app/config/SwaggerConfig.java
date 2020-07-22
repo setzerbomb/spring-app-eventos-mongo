@@ -50,7 +50,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
         Contact contato0 = new Contact("Set", null, "set@localhost");
 
         return new ApiInfoBuilder().title("Eventos APP")
-                .description("Documentação dos End-Points para ser usada como referência")
+                .description("Documentação dos End-Points. Consulte o README para gerar um token de autorização.")
                 .version("Alpha 0.1.0")
                 .license("Open Source")
                 .licenseUrl("https://github.com/setzerbomb/spring-app-eventos-mongo/blob/master/LICENSE.md")
